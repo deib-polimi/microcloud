@@ -1,37 +1,37 @@
 node_types:
   microcloud.container:
     properties:
-      image_type:
+      imageType:
         type: string
       image:
         type: string
-      port_bindings:
+      portBindings:
         type: list
-        entry_schema: map
-      run_parameters:
+        entrySchema: map
+      runParameters:
         type: string
     interfaces:
-      on_dependency_scale:
+      onDependencyScale:
         description: "Hook called when one or more nodes of a dependent tier change"
-      on_node_scale:
+      onNodeScale:
         description: "Hook called when the resources (cpu, memory) allocated to the container change"
 
   microcloud.container.docker:
-    derived_from: microcloud.container
+    derived-from: microcloud.container
     properties:
-      image_type: 'docker'
+      imageType: 'docker'
 
   microcloud.tier:
     properties:
       name:
         type: string
-      max_nodes:
+      maxNodes:
         type: integer
-      container_type:
+      containerType:
         type: microcloud.container
       thresholds:
         type: map
-      depends_on:
+      dependsOn:
         type: list
         entry_schema: string
 
@@ -47,20 +47,21 @@ node_types:
 
   microcloud.infrastructure:
     properties:
-      provider_name:
+      providerName:
         type: string
-      max_vms:
+      maxVMs:
         type: integer
-      vm_flavor:
+      vmFlavor:
           type: string
-      vm_image:
+      vmImage:
           type: string
-      api_key:
-        type: { get_input: api_key }
-      api_secret:
-        type: { get_input: api_secret }
+
 
   microcloud.infrastructure.aws:
     derived_from: microcloud.infrastructure
     properties:
-      provider_name: 'aws-ec2'
+      providerName: 'aws-ec2'
+      apiKey:
+        type: { get_input: awsAPIKey }
+      apiSecret:
+        type: { get_input: awsAPISecret }
